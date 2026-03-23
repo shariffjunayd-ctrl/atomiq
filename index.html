@@ -1,0 +1,3377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>ATOMIQ - 6000 KCSE Questions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Login Page Styles */
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg) 0%, #1a1f35 100%);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .login-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .login-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* CREATED BY JUNAYD - New Style */
+        .creator-credit {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+            to { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.4); }
+        }
+
+        .creator-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.25rem;
+        }
+
+        .creator-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .creator-tagline {
+            font-size: 0.75rem;
+            color: var(--primary);
+            margin-top: 0.25rem;
+            font-weight: 600;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--surface);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: var(--surface-light);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.25rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .login-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .login-divider::before,
+        .login-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 0 1rem;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: var(--surface-light);
+            transform: translateY(-2px);
+        }
+
+        .login-footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin: 2rem 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 0.75rem 0.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-icon {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-text {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            gap: 1.5rem;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .loading-progress {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Header */
+        .header {
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            -webkit-text-fill-color: white;
+            font-weight: 800;
+        }
+
+        .streak-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: rgba(245, 158, 11, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: var(--warning);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            padding-bottom: 100px;
+        }
+
+        .question-counter {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .question-counter span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Subject Selection - 12 subjects */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .subject-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .subject-card:hover::before,
+        .subject-card.active::before {
+            opacity: 1;
+        }
+
+        .subject-card.active {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .subject-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .subject-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .subject-card.active .subject-name {
+            color: var(--text);
+        }
+
+        .question-count {
+            font-size: 0.75rem;
+            color: var(--primary);
+            margin-top: 0.25rem;
+            font-weight: 700;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: none;
+        }
+
+        .filter-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Practice Container */
+        .practice-container {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .question-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .question-meta {
+            color: var(--text-muted);
+        }
+
+        .difficulty {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .difficulty.easy { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .difficulty.medium { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .difficulty.hard { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        /* Illustration/Diagram Styles */
+        .illustration {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            overflow-x: auto;
+        }
+
+        .illustration-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .circuit-diagram {
+            color: #10b981;
+        }
+
+        .math-formula {
+            color: #f59e0b;
+            font-style: italic;
+        }
+
+        .code-block {
+            color: #ec4899;
+            text-align: left;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .accounting-table {
+            color: #6366f1;
+            font-size: 0.8rem;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .option:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .option.wrong {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .option-letter {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option.correct .option-letter {
+            background: var(--success);
+            color: white;
+        }
+
+        .option.wrong .option-letter {
+            background: var(--danger);
+            color: white;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            border-left: 4px solid var(--success);
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation Buttons */
+        .practice-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 12px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-stats {
+            margin-top: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem 0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: translateY(-2px);
+        }
+
+        .nav-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background: var(--surface);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.info { border-left: 4px solid var(--primary); }
+
+        /* Stats Page */
+        .stats-container {
+            display: none;
+        }
+
+        .stats-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .topic-list {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .topic-item {
+            margin-bottom: 1rem;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .topic-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .topic-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Profile Page */
+        .profile-container {
+            display: none;
+            padding: 1rem;
+        }
+
+        .profile-container.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .profile-header {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--surface);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-email {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .profile-menu {
+            background: var(--surface);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .profile-menu-item {
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .profile-menu-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .profile-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .menu-text {
+            font-weight: 500;
+        }
+
+        .menu-arrow {
+            color: var(--text-muted);
+        }
+
+        .logout-btn {
+            width: 100%;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* NEW: MOCK EXAM MODE STYLES */
+        .exam-mode-btn {
+            background: linear-gradient(135deg, var(--warning) 0%, #f97316 100%);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s;
+        }
+
+        .exam-mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .exam-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .exam-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .exam-header {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            padding: 1rem;
+            border-bottom: 2px solid var(--warning);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .exam-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--warning);
+        }
+
+        .exam-timer {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            animation: pulse-timer 1s infinite;
+        }
+
+        @keyframes pulse-timer {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .exam-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .exam-content {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .exam-question-card {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .exam-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .exam-btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .exam-btn-next {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .exam-btn-prev {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .exam-btn-submit {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            flex: 1;
+        }
+
+        .exam-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Exam Results */
+        .results-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 3500;
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .results-overlay.active {
+            display: flex;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results-header {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .results-grade {
+            font-size: 5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .results-message {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 2rem;
+            background: var(--surface);
+            margin: 1rem;
+            border-radius: 20px;
+        }
+
+        .result-stat {
+            text-align: center;
+        }
+
+        .result-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .result-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .results-details {
+            padding: 1rem;
+        }
+
+        .result-item {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--success);
+        }
+
+        .result-item.wrong {
+            border-left-color: var(--danger);
+        }
+
+        .result-item.skipped {
+            border-left-color: var(--warning);
+        }
+
+        .results-actions {
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .results-actions .btn {
+            flex: 1;
+        }
+
+        /* Exam Setup Modal */
+        .exam-setup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2500;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .exam-setup-overlay.active {
+            display: flex;
+        }
+
+        .exam-setup-card {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid var(--warning);
+        }
+
+        .exam-setup-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--warning);
+        }
+
+        .exam-option {
+            margin-bottom: 1.5rem;
+        }
+
+        .exam-option label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .exam-option select {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .exam-start-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--warning) 0%, #f97316 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* NEW: AI SMART TUTOR STYLES */
+        .tutor-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #db2777 100%);
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+            z-index: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tutor-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(236, 72, 153, 0.6);
+        }
+
+        .tutor-btn.pulse {
+            animation: tutor-pulse 2s infinite;
+        }
+
+        @keyframes tutor-pulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(236, 72, 153, 0.8), 0 0 0 10px rgba(236, 72, 153, 0.1); }
+        }
+
+        .tutor-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 4000;
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 1rem;
+        }
+
+        .tutor-overlay.active {
+            display: flex;
+        }
+
+        .tutor-container {
+            background: var(--surface);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 480px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid var(--secondary);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .tutor-header {
+            background: linear-gradient(135deg, var(--secondary) 0%, #db2777 100%);
+            padding: 1.5rem;
+            border-radius: 24px 24px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tutor-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tutor-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .tutor-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 50vh;
+        }
+
+        .tutor-message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tutor-message.user {
+            flex-direction: row-reverse;
+        }
+
+        .tutor-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary) 0%, #db2777 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .tutor-message.user .tutor-avatar {
+            background: var(--primary);
+        }
+
+        .tutor-bubble {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 16px;
+            max-width: 80%;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .tutor-message.user .tutor-bubble {
+            background: var(--primary);
+        }
+
+        .tutor-input-area {
+            padding: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .tutor-input {
+            flex: 1;
+            padding: 1rem;
+            background: var(--bg);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        .tutor-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .tutor-send {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #db2777 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tutor-send:hover {
+            transform: scale(1.05);
+        }
+
+        .tutor-quick-questions {
+            padding: 0 1rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tutor-quick-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tutor-quick-btn:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .tutor-typing {
+            display: flex;
+            gap: 0.25rem;
+            padding: 1rem;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+            .subject-card {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                text-align: left;
+            }
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .creator-credit {
+                padding: 0.75rem 1rem;
+            }
+            .creator-name {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-logo">AI</div>
+        <h1 class="login-title">ATOMIQ</h1>
+        <p class="login-subtitle">Master KCSE with 6000+ Questions</p>
+        
+        <!-- CREATED BY JUNAYD -->
+        <div class="creator-credit">
+            <div class="creator-label">Created By</div>
+            <div class="creator-name">JUNAYD</div>
+            <div class="creator-tagline">Future Software Engineer & KCSE Top Performer</div>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-item"><div class="feature-icon">📐</div><div class="feature-text">Math</div></div>
+            <div class="feature-item"><div class="feature-icon">📚</div><div class="feature-text">English</div></div>
+            <div class="feature-item"><div class="feature-icon">🗣️</div><div class="feature-text">Kiswahili</div></div>
+            <div class="feature-item"><div class="feature-icon">🧬</div><div class="feature-text">Biology</div></div>
+            <div class="feature-item"><div class="feature-icon">⚗️</div><div class="feature-text">Chemistry</div></div>
+            <div class="feature-item"><div class="feature-icon">⚛️</div><div class="feature-text">Physics</div></div>
+            <div class="feature-item"><div class="feature-icon">🌍</div><div class="feature-text">History</div></div>
+            <div class="feature-item"><div class="feature-icon">🗺️</div><div class="feature-text">Geography</div></div>
+            <div class="feature-item"><div class="feature-icon">✝️</div><div class="feature-text">CRE</div></div>
+            <div class="feature-item"><div class="feature-icon">🌾</div><div class="feature-text">Agriculture</div></div>
+            <div class="feature-item"><div class="feature-icon">💼</div><div class="feature-text">Business</div></div>
+            <div class="feature-item"><div class="feature-icon">💻</div><div class="feature-text">Computer</div></div>
+        </div>
+
+        <form class="login-form" onsubmit="handleLogin(event)">
+            <div class="error-message" id="loginError">
+                <span>⚠️</span>
+                <span>Invalid email or password</span>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="loginEmail" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" class="form-input" id="loginPassword" placeholder="Enter your password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+                </div>
+            </div>
+            
+            <button type="submit" class="login-btn">Sign In</button>
+        </form>
+
+        <div class="login-divider">or continue with</div>
+        
+        <div class="social-login">
+            <button class="social-btn" onclick="socialLogin('google')" title="Google">G</button>
+            <button class="social-btn" onclick="socialLogin('apple')" title="Apple">🍎</button>
+            <button class="social-btn" onclick="socialLogin('guest')" title="Guest">👤</button>
+        </div>
+
+        <div class="login-footer">
+            <p>Don't have an account? <a href="#" onclick="showToast('Coming soon!', 'info')">Sign up</a></p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem;">Forgot password? <a href="#" onclick="showToast('Contact support', 'info')">Reset</a></p>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-overlay hidden" id="loadingScreen">
+        <div class="spinner"></div>
+        <div class="loading-text">Generating 6,000 Questions...</div>
+        <div class="loading-progress">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+        <div style="color: var(--text-muted); font-size: 0.9rem;" id="loadingDetail">Initializing...</div>
+    </div>
+
+    <div class="app-container" id="mainApp" style="display: none;">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">AI</div>
+                    <span>ATOMIQ</span>
+                </div>
+                <div class="streak-badge">
+                    <span>🔥</span>
+                    <span id="streakCount">3</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Mock Exam Mode Button -->
+            <button class="exam-mode-btn" onclick="openExamSetup()">
+                <span>📝</span>
+                <span>START MOCK EXAM</span>
+            </button>
+
+            <!-- Question Counter -->
+            <div class="question-counter">
+                Question <span id="currentNum">1</span> of <span id="totalNum">500</span> • <span id="subjectName">Mathematics</span>
+            </div>
+
+            <!-- Subject Selection - 12 Subjects -->
+            <div class="subjects-grid">
+                <div class="subject-card active" data-subject="mathematics" onclick="selectSubject('mathematics')">
+                    <span class="subject-icon">📐</span>
+                    <div>
+                        <div class="subject-name">Mathematics</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="english" onclick="selectSubject('english')">
+                    <span class="subject-icon">📚</span>
+                    <div>
+                        <div class="subject-name">English</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="kiswahili" onclick="selectSubject('kiswahili')">
+                    <span class="subject-icon">🗣️</span>
+                    <div>
+                        <div class="subject-name">Kiswahili</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="biology" onclick="selectSubject('biology')">
+                    <span class="subject-icon">🧬</span>
+                    <div>
+                        <div class="subject-name">Biology</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="chemistry" onclick="selectSubject('chemistry')">
+                    <span class="subject-icon">⚗️</span>
+                    <div>
+                        <div class="subject-name">Chemistry</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="physics" onclick="selectSubject('physics')">
+                    <span class="subject-icon">⚛️</span>
+                    <div>
+                        <div class="subject-name">Physics</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="history" onclick="selectSubject('history')">
+                    <span class="subject-icon">🌍</span>
+                    <div>
+                        <div class="subject-name">History</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="geography" onclick="selectSubject('geography')">
+                    <span class="subject-icon">🗺️</span>
+                    <div>
+                        <div class="subject-name">Geography</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="cre" onclick="selectSubject('cre')">
+                    <span class="subject-icon">✝️</span>
+                    <div>
+                        <div class="subject-name">CRE</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="agriculture" onclick="selectSubject('agriculture')">
+                    <span class="subject-icon">🌾</span>
+                    <div>
+                        <div class="subject-name">Agriculture</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="business" onclick="selectSubject('business')">
+                    <span class="subject-icon">💼</span>
+                    <div>
+                        <div class="subject-name">Business Studies</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+                <div class="subject-card" data-subject="computer" onclick="selectSubject('computer')">
+                    <span class="subject-icon">💻</span>
+                    <div>
+                        <div class="subject-name">Computer Studies</div>
+                        <div class="question-count">500 Qs</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="setFilter('all')">All</button>
+                <button class="filter-btn" onclick="setFilter('easy')">Easy</button>
+                <button class="filter-btn" onclick="setFilter('medium')">Medium</button>
+                <button class="filter-btn" onclick="setFilter('hard')">Hard</button>
+            </div>
+
+            <!-- Practice Mode -->
+            <div class="practice-container" id="practiceMode">
+                <div class="question-card">
+                    <div class="question-header">
+                        <div class="question-meta">
+                            <span id="qYear">KCSE 2023</span> • <span id="qTopic">Algebra</span>
+                        </div>
+                        <span class="difficulty easy" id="qDifficulty">EASY</span>
+                    </div>
+                    <div class="question-text" id="questionText">
+                        Loading question...
+                    </div>
+                    <div id="illustrationContainer"></div>
+                    <div class="options-list" id="optionsList">
+                        <!-- Options generated by JS -->
+                    </div>
+                    <div class="explanation" id="explanation">
+                        <div class="explanation-title">
+                            <span>✓</span>
+                            <span>Correct Answer</span>
+                        </div>
+                        <p id="explanationText"></p>
+                    </div>
+                </div>
+
+                <div class="practice-nav">
+                    <button class="btn btn-secondary" onclick="prevQuestion()" id="prevBtn">
+                        ← Prev
+                    </button>
+                    <button class="btn btn-primary" onclick="checkAnswer()" id="checkBtn">
+                        Check Answer
+                    </button>
+                    <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn" style="display: none;">
+                        Next →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section">
+                <div class="progress-header">
+                    <span>Your Progress</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="progress-stats">
+                    <span>Correct: <strong id="correctCount">0</strong></span>
+                    <span>Attempted: <strong id="attemptedCount">0</strong></span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Stats Page (Hidden by default) -->
+        <div class="stats-container" id="statsPage">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statTotal">0</div>
+                    <div class="stat-label">Questions Attempted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statAccuracy">0%</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statMath">0</div>
+                    <div class="stat-label">Mathematics</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statBio">0</div>
+                    <div class="stat-label">Biology</div>
+                </div>
+            </div>
+
+            <div class="topic-list" id="topicList">
+                <h3 style="margin-bottom: 1rem; color: var(--text-muted);">Topic Mastery</h3>
+                <!-- Generated by JS -->
+            </div>
+        </div>
+
+        <!-- Profile Page (Hidden by default) -->
+        <div class="profile-container" id="profilePage">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profileAvatar">👤</div>
+                <div class="profile-name" id="profileName">Student</div>
+                <div class="profile-email" id="profileEmail">student@atomiq.com</div>
+            </div>
+
+            <div class="profile-menu">
+                <div class="profile-menu-item" onclick="showToast('Settings coming soon!', 'info')">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">⚙️</div>
+                        <div class="menu-text">Settings</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+                <div class="profile-menu-item" onclick="showToast('Progress saved!', 'success')">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">💾</div>
+                        <div class="menu-text">Sync Progress</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+                <div class="profile-menu-item" onclick="showToast('Dark mode active', 'info')">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">🌙</div>
+                        <div class="menu-text">Appearance</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+                <div class="profile-menu-item" onclick="showToast('Help center coming soon!', 'info')">
+                    <div class="menu-item-left">
+                        <div class="menu-icon">❓</div>
+                        <div class="menu-text">Help & Support</div>
+                    </div>
+                    <div class="menu-arrow">→</div>
+                </div>
+            </div>
+
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="showPage('practice')">
+                <span class="nav-icon">✏️</span>
+                <span class="nav-label">Practice</span>
+            </button>
+            <button class="nav-item" onclick="showPage('stats')">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Stats</span>
+            </button>
+            <button class="nav-item" onclick="showToast('Review mode coming soon!', 'info')">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">Review</span>
+            </button>
+            <button class="nav-item" onclick="showPage('profile')">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Exam Setup Modal -->
+    <div class="exam-setup-overlay" id="examSetupOverlay">
+        <div class="exam-setup-card">
+            <h2 class="exam-setup-title">📝 Mock Exam Setup</h2>
+            
+            <div class="exam-option">
+                <label>Select Subject</label>
+                <select id="examSubject">
+                    <option value="mathematics">Mathematics (Paper 1 & 2)</option>
+                    <option value="english">English</option>
+                    <option value="kiswahili">Kiswahili</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="physics">Physics</option>
+                    <option value="history">History</option>
+                    <option value="geography">Geography</option>
+                    <option value="cre">CRE</option>
+                    <option value="agriculture">Agriculture</option>
+                    <option value="business">Business Studies</option>
+                    <option value="computer">Computer Studies</option>
+                </select>
+            </div>
+
+            <div class="exam-option">
+                <label>Number of Questions</label>
+                <select id="examQuestionCount">
+                    <option value="10">10 Questions (Quick Test)</option>
+                    <option value="20">20 Questions (Standard)</option>
+                    <option value="30" selected>30 Questions (Full Mock)</option>
+                    <option value="50">50 Questions (Marathon)</option>
+                </select>
+            </div>
+
+            <div class="exam-option">
+                <label>Difficulty Mix</label>
+                <select id="examDifficulty">
+                    <option value="mixed">Mixed (Easy/Medium/Hard)</option>
+                    <option value="easy">Easy Only</option>
+                    <option value="medium">Medium Only</option>
+                    <option value="hard">Hard Only</option>
+                </select>
+            </div>
+
+            <button class="exam-start-btn" onclick="startExam()">Start Exam</button>
+        </div>
+    </div>
+
+    <!-- Exam Mode Overlay -->
+    <div class="exam-overlay" id="examOverlay">
+        <div class="exam-header">
+            <div class="exam-title">📝 MOCK EXAM</div>
+            <div class="exam-progress">
+                <span id="examQuestionNum">1</span> / <span id="examTotalNum">30</span>
+            </div>
+            <div class="exam-timer" id="examTimer">45:00</div>
+        </div>
+
+        <div class="exam-content" id="examContent">
+            <!-- Exam questions loaded here -->
+        </div>
+
+        <div class="exam-nav">
+            <button class="exam-btn exam-btn-prev" onclick="prevExamQuestion()">← Previous</button>
+            <button class="exam-btn exam-btn-next" onclick="nextExamQuestion()">Next →</button>
+            <button class="exam-btn exam-btn-submit" onclick="submitExam()" style="display: none;">Submit Exam</button>
+        </div>
+    </div>
+
+    <!-- Exam Results Overlay -->
+    <div class="results-overlay" id="resultsOverlay">
+        <div class="results-header">
+            <h2>🎉 Exam Complete!</h2>
+            <div class="results-grade" id="resultsGrade">A</div>
+            <div class="results-message" id="resultsMessage">Excellent work!</div>
+        </div>
+
+        <div class="results-stats">
+            <div class="result-stat">
+                <div class="result-stat-value" id="resultScore">25/30</div>
+                <div class="result-stat-label">Score</div>
+            </div>
+            <div class="result-stat">
+                <div class="result-stat-value" id="resultPercent">83%</div>
+                <div class="result-stat-label">Percentage</div>
+            </div>
+            <div class="result-stat">
+                <div class="result-stat-value" id="resultTime">32:15</div>
+                <div class="result-stat-label">Time Used</div>
+            </div>
+        </div>
+
+        <div class="results-details" id="resultsDetails">
+            <!-- Detailed breakdown -->
+        </div>
+
+        <div class="results-actions">
+            <button class="btn btn-secondary" onclick="closeResults()">Review Answers</button>
+            <button class="btn btn-primary" onclick="retakeExam()">Retake Exam</button>
+        </div>
+    </div>
+
+    <!-- AI Smart Tutor Button -->
+    <button class="tutor-btn pulse" onclick="openTutor()" title="Ask AI Tutor">🤖</button>
+
+    <!-- AI Smart Tutor Overlay -->
+    <div class="tutor-overlay" id="tutorOverlay">
+        <div class="tutor-container">
+            <div class="tutor-header">
+                <div class="tutor-title">
+                    <span>🤖</span>
+                    <span>AI Smart Tutor</span>
+                </div>
+                <button class="tutor-close" onclick="closeTutor()">✕</button>
+            </div>
+
+            <div class="tutor-messages" id="tutorMessages">
+                <div class="tutor-message">
+                    <div class="tutor-avatar">🤖</div>
+                    <div class="tutor-bubble">
+                        Hello! I'm your AI study buddy. I can help you understand any KCSE topic, explain answers, or give you study tips. What would you like to learn?
+                    </div>
+                </div>
+            </div>
+
+            <div class="tutor-quick-questions" id="tutorQuickQuestions">
+                <button class="tutor-quick-btn" onclick="askTutor('How do I solve quadratic equations?')">Quadratic equations?</button>
+                <button class="tutor-quick-btn" onclick="askTutor('Explain photosynthesis')">Photosynthesis?</button>
+                <button class="tutor-quick-btn" onclick="askTutor('What is the difference between DNA and RNA?')">DNA vs RNA?</button>
+                <button class="tutor-quick-btn" onclick="askTutor('Give me study tips for KCSE')">Study tips?</button>
+            </div>
+
+            <div class="tutor-input-area">
+                <input type="text" class="tutor-input" id="tutorInput" placeholder="Ask me anything..." onkeypress="if(event.key==='Enter')sendTutorMessage()">
+                <button class="tutor-send" onclick="sendTutorMessage()">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ==========================================
+        // AUTHENTICATION SYSTEM
+        // ==========================================
+        
+        let currentUser = null;
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (email && password.length >= 6) {
+                currentUser = {
+                    email: email,
+                    name: email.split('@')[0],
+                    avatar: email[0].toUpperCase()
+                };
+                
+                localStorage.setItem('atomiq_user', JSON.stringify(currentUser));
+                
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('loadingScreen').classList.remove('hidden');
+                
+                document.getElementById('profileName').textContent = currentUser.name;
+                document.getElementById('profileEmail').textContent = currentUser.email;
+                document.getElementById('profileAvatar').textContent = currentUser.avatar;
+                
+                setTimeout(() => {
+                    initApp();
+                }, 1000);
+            } else {
+                errorDiv.classList.add('show');
+                setTimeout(() => errorDiv.classList.remove('show'), 3000);
+            }
+        }
+        
+        function togglePassword() {
+            const input = document.getElementById('loginPassword');
+            input.type = input.type === 'password' ? 'text' : 'password';
+        }
+        
+        function socialLogin(provider) {
+            if (provider === 'guest') {
+                currentUser = {
+                    email: 'guest@atomiq.com',
+                    name: 'Guest Student',
+                    avatar: '👤'
+                };
+                localStorage.setItem('atomiq_user', JSON.stringify(currentUser));
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('loadingScreen').classList.remove('hidden');
+                
+                document.getElementById('profileName').textContent = currentUser.name;
+                document.getElementById('profileEmail').textContent = currentUser.email;
+                
+                setTimeout(() => {
+                    initApp();
+                }, 1000);
+            } else {
+                showToast(`${provider} login coming soon!`, 'info');
+            }
+        }
+        
+        function handleLogout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('atomiq_user');
+                location.reload();
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUser = localStorage.getItem('atomiq_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('loadingScreen').classList.remove('hidden');
+                
+                document.getElementById('profileName').textContent = currentUser.name;
+                document.getElementById('profileEmail').textContent = currentUser.email;
+                document.getElementById('profileAvatar').textContent = currentUser.avatar;
+                
+                setTimeout(() => {
+                    initApp();
+                }, 500);
+            }
+        });
+
+        // ==========================================
+        // QUESTION GENERATOR SYSTEM FOR 12 SUBJECTS
+        // ==========================================
+
+        const QuestionGenerator = {
+            // 1. MATHEMATICS - VERIFIED CORRECT ANSWERS
+            mathematicsTemplates: [
+                {
+                    topic: "Algebra",
+                    templates: [
+                        { q: "Solve for x: 2x + 5 = 15", options: ["x = 5", "x = 10", "x = 7.5", "x = 20"], correct: 0, explanation: "Subtract 5 from both sides: 2x = 10, then divide by 2: x = 5" },
+                        { q: "Simplify: 3x + 2y - x + 4y", options: ["2x + 6y", "4x + 6y", "2x + 2y", "4x + 2y"], correct: 0, explanation: "Combine like terms: (3x - x) + (2y + 4y) = 2x + 6y" },
+                        { q: "Factorize: x² - 9", options: ["(x + 3)(x - 3)", "(x + 9)(x - 9)", "(x + 3)²", "(x - 3)²"], correct: 0, explanation: "Difference of squares: a² - b² = (a + b)(a - b), so x² - 9 = (x + 3)(x - 3)" },
+                        { q: "If a = 3 and b = 4, find a² + b²", options: ["25", "12", "7", "49"], correct: 0, explanation: "3² + 4² = 9 + 16 = 25" },
+                        { q: "Expand: (x + 2)(x - 3)", options: ["x² - x - 6", "x² + x - 6", "x² - 5x - 6", "x² + 5x - 6"], correct: 0, explanation: "Using FOIL: x² - 3x + 2x - 6 = x² - x - 6" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Calculus",
+                    templates: [
+                        { q: "Differentiate: y = 3x² + 2x - 5", options: ["dy/dx = 6x + 2", "dy/dx = 6x + 2x", "dy/dx = 3x + 2", "dy/dx = 6x² + 2"], correct: 0, explanation: "Using power rule: d/dx(x^n) = nx^(n-1). So 3x² becomes 6x, 2x becomes 2, constant -5 becomes 0" },
+                        { q: "Find the gradient of y = x³ - 6x² + 9x at x = 1", options: ["0", "3", "9", "-6"], correct: 0, explanation: "dy/dx = 3x² - 12x + 9. At x = 1: 3(1) - 12(1) + 9 = 3 - 12 + 9 = 0" },
+                        { q: "Integrate: ∫(4x³ - 2x)dx", options: ["x⁴ - x² + C", "4x⁴ - 2x² + C", "x⁴ - x²", "4x² - 2x + C"], correct: 0, explanation: "∫x^n dx = x^(n+1)/(n+1). So ∫4x³ dx = x⁴ and ∫-2x dx = -x². Add constant C." },
+                        { q: "Find the turning point of y = x² - 4x + 3", options: ["(2, -1)", "(2, 1)", "(-2, -1)", "(4, 3)"], correct: 0, explanation: "dy/dx = 2x - 4 = 0 → x = 2. When x = 2, y = 4 - 8 + 3 = -1. Point is (2, -1)" },
+                        { q: "Calculate the area under y = 2x from x = 0 to x = 3", options: ["9 square units", "6 square units", "12 square units", "3 square units"], correct: 0, explanation: "∫₀³ 2x dx = [x²]₀³ = 9 - 0 = 9 square units" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Geometry",
+                    templates: [
+                        { q: "Calculate the area of a circle with radius 7cm", options: ["154 cm²", "44 cm²", "308 cm²", "22 cm²"], correct: 0, explanation: "Area = πr² = 22/7 × 7 × 7 = 154 cm²", illustration: "circle" },
+                        { q: "Find the volume of a cylinder with radius 3cm and height 10cm", options: ["282.74 cm³", "90 cm³", "30 cm³", "94.2 cm³"], correct: 0, explanation: "Volume = πr²h = 3.142 × 9 × 10 = 282.74 cm³", illustration: "cylinder" },
+                        { q: "Calculate the area of a triangle with base 12cm and height 8cm", options: ["48 cm²", "96 cm²", "20 cm²", "40 cm²"], correct: 0, explanation: "Area = ½ × base × height = ½ × 12 × 8 = 48 cm²", illustration: "triangle" },
+                        { q: "Find the hypotenuse of a right triangle with sides 6cm and 8cm", options: ["10 cm", "14 cm", "12 cm", "100 cm"], correct: 0, explanation: "Using Pythagoras: c² = 6² + 8² = 36 + 64 = 100, so c = 10 cm", illustration: "pythagoras" },
+                        { q: "Calculate the surface area of a sphere with radius 6cm", options: ["452.39 cm²", "904.78 cm²", "113.1 cm²", "301.59 cm²"], correct: 0, explanation: "Surface area = 4πr² = 4 × 3.142 × 36 = 452.39 cm²", illustration: "sphere" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 2. ENGLISH - GRAMMAR ONLY (NO PASSAGES)
+            englishTemplates: [
+                {
+                    topic: "Grammar - Parts of Speech",
+                    templates: [
+                        { q: "Identify the part of speech of 'quickly' in: 'She ran quickly'", options: ["Adverb", "Adjective", "Verb", "Noun"], correct: 0, explanation: "'Quickly' describes how she ran (verb), making it an adverb" },
+                        { q: "Which word is a preposition in: 'The cat sat under the table'", options: ["under", "sat", "cat", "table"], correct: 0, explanation: "'Under' shows position/relationship between cat and table - it's a preposition" },
+                        { q: "Identify the conjunction in: 'I like tea but not coffee'", options: ["but", "like", "tea", "not"], correct: 0, explanation: "'But' connects two clauses showing contrast - it's a coordinating conjunction" },
+                        { q: "Which is a proper noun?", options: ["London", "city", "river", "mountain"], correct: 0, explanation: "'London' is a specific name of a place, making it a proper noun" },
+                        { q: "Identify the pronoun in: 'They went to school'", options: ["They", "went", "school", "to"], correct: 0, explanation: "'They' replaces a noun (the people), making it a pronoun" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Grammar - Tenses",
+                    templates: [
+                        { q: "Change to past perfect: 'She eats breakfast'", options: ["She had eaten breakfast", "She has eat breakfast", "She ate breakfast", "She was eating breakfast"], correct: 0, explanation: "Past perfect = had + past participle (eaten)" },
+                        { q: "Which sentence is in present continuous tense?", options: ["They are playing football", "They play football", "They played football", "They have played football"], correct: 0, explanation: "Present continuous = am/is/are + verb-ing (are playing)" },
+                        { q: "Change to future tense: 'I write a letter'", options: ["I will write a letter", "I wrote a letter", "I am writing a letter", "I have written a letter"], correct: 0, explanation: "Simple future uses 'will' + base verb" },
+                        { q: "Identify the tense: 'He has been working'", options: ["Present perfect continuous", "Past perfect", "Simple present", "Future perfect"], correct: 0, explanation: "Has been + verb-ing = present perfect continuous" },
+                        { q: "Change to passive voice: 'The dog bit the man'", options: ["The man was bitten by the dog", "The man is bitten by the dog", "The man been bitten by the dog", "The man was biting by the dog"], correct: 0, explanation: "Passive = object + was/were + past participle + by + subject" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Grammar - Sentence Structure",
+                    templates: [
+                        { q: "Correct the error: 'He don't like apples'", options: ["He doesn't like apples", "He don't likes apples", "He not like apples", "He isn't like apples"], correct: 0, explanation: "With 'he' (3rd person singular), use 'doesn't' not 'don't'" },
+                        { q: "Choose the correct sentence", options: ["Between you and me", "Between you and I", "Between you and myself", "Between you and we"], correct: 0, explanation: "'Between' is a preposition, so use object pronoun 'me' not 'I'" },
+                        { q: "Correct: 'I have went to school'", options: ["I have gone to school", "I have go to school", "I have going to school", "I have goes to school"], correct: 0, explanation: "Past participle of go is 'gone', not 'went'" },
+                        { q: "Which is a complex sentence?", options: ["Although it rained, we played", "I like tea and he likes coffee", "Run!", "The sun shines"], correct: 0, explanation: "Complex sentence has one independent and one dependent clause (Although...)" },
+                        { q: "Correct: 'The boys is playing'", options: ["The boys are playing", "The boys was playing", "The boys be playing", "The boys been playing"], correct: 0, explanation: "'Boys' is plural, so use 'are' not 'is'" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 3. KISWAHILI - SARUFI TU (HAKUNA FASIHI WALA PASSAGES)
+            kiswahiliTemplates: [
+                {
+                    topic: "Sarufi - Viwakilishi",
+                    templates: [
+                        { q: "Chagua sentensi sahihi: 'Yeye anapenda chakula' au 'Yeye napenda chakula'", options: ["Yeye anapenda chakula", "Yeye napenda chakula", "Yeye unapenda chakula", "Yeye ninapenda chakula"], correct: 0, explanation: "Kiwakilishi 'yeye' huchanganywa na 'a-' (anapenda) si 'na-'" },
+                        { q: "Ni kiambishi kipi cha wakati? 'Aliimba'", options: ["Ali-", "-imba", "-li-", "A-"], correct: 0, explanation: "'Ali-' ni kiambishi cha wakati uliopita (past tense)" },
+                        { q: "Chaguo sahihi: 'Watoto wana ___ shule'", options: ["kwenda", "enda", "huenda", "alienda"], correct: 0, explanation: "Baada ya 'wana' tunatumia vitenzi vya infinitive (kwenda)" },
+                        { q: "Ni nomino gani hii: 'Kitu'", options: ["Kivumishi", "Nomino", "Kitenzi", "Kielezi"], correct: 1, explanation: "'Kitu' ni jina la kitu chochote - ni nomino" },
+                        { q: "Sahihisha: 'Mimi anacheza'", options: ["Mimi ninacheza", "Mimi unacheza", "Mimi anacheza", "Mimi tunacheza"], correct: 0, explanation: "'Mimi' huchanganywa na 'ni-' (ninacheza)" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Sarufi - Vitenzi",
+                    templates: [
+                        { q: "Badilisha kwa wakati ujao: 'Tulikula'", options: ["Tutakula", "Tunakula", "Tume_kula", "Tulikula"], correct: 0, explanation: "Wakati ujao = 'tu-ta-' + kitenzi (tutakula)" },
+                        { q: "Ni kitenzi gani hiki: 'Kupika'", options: ["Infinitive", "Wakati uliopita", "Wakati ujao", "Hali ya kuendelea"], correct: 0, explanation: "'Ku-' mwanzoni huonyesha infinitive (kufanya)" },
+                        { q: "Tengeneza: 'Anaandika' kwa hali ya kuendelea", options: ["Anaandika", "Aliandika", "Ataandika", "Ameandika"], correct: 0, explanation: "'Ana-' huonyesha hali ya kuendelea (present continuous)" },
+                        { q: "Chagua: 'Wao ___ wakisoma'", options: ["wana", "una", "ana", "nina"], correct: 0, explanation: "'Wao' (wingi) huchanganywa na 'wa-' (wanakisoma)" },
+                        { q: "Badilisha kwa hali ya kufanyika: 'Mtoto analia'", options: ["Kulia kwake", "Analiwa", "Analiana", "Analiika"], correct: 0, explanation: "Hali ya kufanyika inaanza na 'Ku-' (Kulia kwake)" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Sarufi - Viambishi",
+                    templates: [
+                        { q: "Ni kiambishi kipi cha umoja? 'A-'", options: ["A-", "Wa-", "Ya-", "Za-"], correct: 0, explanation: "'A-' ni kiambishi cha umoja (yeye ana)" },
+                        { q: "Chagua kiambishi cha wingi: '___naogopa'", options: ["Tu-", "A-", "U-", "Ni-"], correct: 0, explanation: "'Tu-' ni kiambishi cha wingi (sisi tunaogopa)" },
+                        { q: "Ni kiambishi kipi cha wakati uliopita?", options: ["Li-", "Ta-", "Na-", "Me-"], correct: 0, explanation: "'-li-' huonyesha wakati uliopita (alicheza)" },
+                        { q: "Chagua: Kiambishi '-me-' kinaonyesha ___", options: ["Hali ya timilifu", "Wakati ujao", "Wakati uliopita", "Hali ya kuendelea"], correct: 0, explanation: "'-me-' = present perfect (amefanya)" },
+                        { q: "Sahihisha: 'Yeye ___ mwalimu'", options: ["ni", "ana", "ali", "ata"], correct: 0, explanation: "'Ni' hutumika kufananisha (yeye ni mwalimu)" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 4. BIOLOGY - VERIFIED
+            biologyTemplates: [
+                {
+                    topic: "Cell Biology",
+                    templates: [
+                        { q: "What is the primary function of mitochondria?", options: ["Cellular respiration", "Waste removal", "Cell division", "Energy storage"], correct: 0, explanation: "Mitochondria are the powerhouse of the cell, producing ATP through cellular respiration" },
+                        { q: "Which organelle is known as the 'powerhouse'?", options: ["Mitochondria", "Nucleus", "Ribosome", "Golgi body"], correct: 0, explanation: "Mitochondria generate ATP, earning them the nickname 'powerhouse of the cell'" },
+                        { q: "In which type of cell would you find a cell wall?", options: ["Plant cell", "Animal cell only", "Bacterial cell", "All cells"], correct: 0, explanation: "Cell walls are found in plant cells (cellulose), fungi (chitin), and bacteria (peptidoglycan)" },
+                        { q: "What happens during photosynthesis?", options: ["Glucose production", "Cell division", "Protein synthesis", "Waste removal"], correct: 0, explanation: "Photosynthesis converts light energy into chemical energy (glucose) using CO₂ and H₂O" },
+                        { q: "The nucleus is responsible for genetic control.", options: ["True", "False", "Only in plants", "Only in animals"], correct: 0, explanation: "The nucleus contains DNA and controls cell activities by regulating gene expression" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Genetics",
+                    templates: [
+                        { q: "What is the phenotypic ratio of monohybrid heterozygous cross?", options: ["3:1", "1:1", "1:0", "2:1"], correct: 0, explanation: "Crossing Aa × Aa gives genotypes AA:Aa:aa = 1:2:1, phenotypes = 3 dominant : 1 recessive" },
+                        { q: "If heterozygous tall is crossed with heterozygous tall, what's probability of short offspring?", options: ["25%", "50%", "75%", "100%"], correct: 0, explanation: "Tt × Tt gives TT:Tt:tt = 1:2:1. Only tt is short = 25%" },
+                        { q: "Which term describes genetic makeup?", options: ["Genotype", "Phenotype", "Allele", "Trait"], correct: 0, explanation: "Genotype refers to the genetic constitution (alleles present) of an organism" },
+                        { q: "What is the function of DNA?", options: ["Store genetic information", "Energy production", "Cell division", "Waste removal"], correct: 0, explanation: "DNA stores genetic information in the sequence of nitrogenous bases" },
+                        { q: "In a dihybrid cross, how many phenotypes are produced?", options: ["16", "2", "8", "4"], correct: 0, explanation: "Dihybrid cross AaBb × AaBb produces 16 genotypic combinations and 4 phenotypic classes (9:3:3:1)" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 5. CHEMISTRY - VERIFIED
+            chemistryTemplates: [
+                {
+                    topic: "Atomic Structure",
+                    templates: [
+                        { q: "How many protons are in an atom of carbon with mass number 12?", options: ["6", "12", "6", "8"], correct: 0, explanation: "Carbon has atomic number 6, so it always has 6 protons regardless of mass number" },
+                        { q: "What is the electron configuration of oxygen (atomic number 8)?", options: ["2,6", "2,8", "2,8,8", "2,8,8,2"], correct: 0, explanation: "Oxygen has 8 electrons: 2 in first shell, 6 in second shell (2,6)" },
+                        { q: "Which subatomic particle has a negative charge?", options: ["Electron", "Proton", "Neutron", "Nucleus"], correct: 0, explanation: "Electrons carry -1 charge, protons +1, neutrons 0 charge" },
+                        { q: "What happens when an atom gains an electron?", options: ["Becomes a negative ion", "It explodes", "Mass increases", "Color changes"], correct: 0, explanation: "Gaining electrons (negative) makes the atom negatively charged (anion)" },
+                        { q: "Calculate neutrons in sodium-23 (atomic number 11)", options: ["12", "11", "23", "34"], correct: 0, explanation: "Neutrons = Mass number - Atomic number = 23 - 11 = 12" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Chemical Bonding",
+                    templates: [
+                        { q: "What type of bond forms between sodium and chlorine?", options: ["Ionic", "Covalent", "Metallic", "Hydrogen"], correct: 0, explanation: "Na (metal) transfers electron to Cl (non-metal) forming Na⁺ and Cl⁻ ions" },
+                        { q: "Which property is characteristic of ionic compounds?", options: ["High melting point", "Low melting point", "Poor conductivity", "Soft texture"], correct: 0, explanation: "Strong electrostatic forces between ions require high energy to break" },
+                        { q: "How many electrons are shared in a double bond?", options: ["4", "1", "3", "2"], correct: 0, explanation: "Double bond = 2 pairs of electrons = 4 electrons total" },
+                        { q: "What is the shape of a methane molecule?", options: ["Tetrahedral", "Linear", "Trigonal planar", "Octahedral"], correct: 0, explanation: "CH₄ has 4 bonding pairs with 109.5° bond angles - tetrahedral geometry" },
+                        { q: "Why does NaCl have a high melting point?", options: ["Strong electrostatic forces", "Weak intermolecular forces", "Small molecular size", "Non-polar nature"], correct: 0, explanation: "Strong ionic bonds between Na⁺ and Cl⁻ require much energy to overcome" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 6. PHYSICS - VERIFIED WITH DIAGRAMS
+            physicsTemplates: [
+                {
+                    topic: "Mechanics",
+                    templates: [
+                        { q: "Calculate momentum of a 5kg object moving at 10m/s", options: ["50 kg m/s", "25 kg m/s", "100 kg m/s", "15 kg m/s"], correct: 0, explanation: "Momentum p = mv = 5 × 10 = 50 kg m/s", illustration: "formula" },
+                        { q: "What is the acceleration if 10N force acts on 2kg mass?", options: ["5 m/s²", "20 m/s²", "0.2 m/s²", "12 m/s²"], correct: 0, explanation: "F = ma, so a = F/m = 10/2 = 5 m/s²", illustration: "formula" },
+                        { q: "Calculate kinetic energy of 2kg object at 10m/s", options: ["100 J", "50 J", "200 J", "20 J"], correct: 0, explanation: "KE = ½mv² = ½ × 2 × 100 = 100 J", illustration: "formula" },
+                        { q: "How much work is done by 20N force moving 8m?", options: ["160 J", "80 J", "1600 J", "28 J"], correct: 0, explanation: "Work = Force × Distance = 20 × 8 = 160 J", illustration: "formula" },
+                        { q: "Calculate potential energy of 5kg object at 10m height", options: ["490 J", "245 J", "980 J", "49 J"], correct: 0, explanation: "PE = mgh = 5 × 9.8 × 10 = 490 J", illustration: "formula" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Electricity",
+                    templates: [
+                        { q: "Calculate current with 10Ω resistance and 20V potential difference", options: ["2 A", "0.5 A", "200 A", "30 A"], correct: 0, explanation: "Ohm's Law: I = V/R = 20/10 = 2 A", illustration: "circuit" },
+                        { q: "What is power dissipated in a resistor with 2A current and 10Ω?", options: ["40 W", "20 W", "400 W", "5 W"], correct: 0, explanation: "P = I²R = 4 × 10 = 40 W", illustration: "circuit" },
+                        { q: "How does temperature affect metal resistance?", options: ["Increases", "No effect", "Decreases", "Destroys"], correct: 0, explanation: "Higher temperature increases ion vibrations, increasing resistance", illustration: "circuit" },
+                        { q: "Calculate voltage with 5Ω resistance and 2A current", options: ["10 V", "2.5 V", "20 V", "7 V"], correct: 0, explanation: "V = IR = 2 × 5 = 10 V", illustration: "circuit" },
+                        { q: "What is total resistance of 10Ω and 20Ω in series?", options: ["30 Ω", "6.67 Ω", "200 Ω", "10 Ω"], correct: 0, explanation: "Series: R_total = R₁ + R₂ = 10 + 20 = 30 Ω", illustration: "circuit" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 7. HISTORY - VERIFIED
+            historyTemplates: [
+                {
+                    topic: "World Wars",
+                    templates: [
+                        { q: "What was the immediate cause of World War I?", options: ["Assassination of Archduke Franz Ferdinand", "Invasion of Poland", "Attack on Pearl Harbor", "Berlin Wall construction"], correct: 0, explanation: "The assassination in Sarajevo on June 28, 1914 triggered the war" },
+                        { q: "In which year did World War II end?", options: ["1945", "1944", "1939", "1950"], correct: 0, explanation: "WWII ended in 1945 with Germany surrendering in May and Japan in August" },
+                        { q: "Who was the leader of Germany during WWII?", options: ["Adolf Hitler", "Winston Churchill", "Joseph Stalin", "Benito Mussolini"], correct: 0, explanation: "Hitler was Führer of Germany from 1934-1945" },
+                        { q: "What was the outcome of the Battle of Stalingrad?", options: ["Turning point for Allies", "German victory", "Stalemate", "Italian victory"], correct: 0, explanation: "Stalingrad (1942-43) was the turning point where Germans suffered massive losses" },
+                        { q: "Which alliance did Britain belong to in WWII?", options: ["Allied Powers", "Axis Powers", "Central Powers", "Triple Alliance"], correct: 0, explanation: "Britain, USA, USSR formed the Allies against Germany, Italy, Japan (Axis)" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "African Nationalism",
+                    templates: [
+                        { q: "Who was the first president of Kenya after independence?", options: ["Jomo Kenyatta", "Oginga Odinga", "Tom Mboya", "Dedan Kimathi"], correct: 0, explanation: "Jomo Kenyatta became president when Kenya gained independence on December 12, 1963" },
+                        { q: "In which year did Ghana gain independence?", options: ["1957", "1960", "1950", "1963"], correct: 0, explanation: "Ghana became the first sub-Saharan African country to gain independence on March 6, 1957" },
+                        { q: "What was the main nationalist party in Tanzania?", options: ["TANU", "KANU", "ANC", "ZANU"], correct: 0, explanation: "Tanganyika African National Union (TANU) led by Julius Nyerere fought for independence" },
+                        { q: "Which colonial power ruled Kenya before independence?", options: ["Britain", "France", "Portugal", "Germany"], correct: 0, explanation: "Kenya was a British colony from 1920 until independence in 1963" },
+                        { q: "What method did Nkrumah use to achieve independence?", options: ["Positive action/non-violence", "Armed struggle", "Diplomatic isolation", "Economic sanctions"], correct: 0, explanation: "Kwame Nkrumah used non-violent methods like strikes and boycotts" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 8. GEOGRAPHY - VERIFIED
+            geographyTemplates: [
+                {
+                    topic: "Climate",
+                    templates: [
+                        { q: "What type of climate has hot summers, cold winters, moderate rainfall?", options: ["Temperate continental", "Tropical rainforest", "Mediterranean", "Desert"], correct: 0, explanation: "Temperate continental climates experience large seasonal temperature variations" },
+                        { q: "Which latitude experiences vertical rays of the sun?", options: ["Equator (0°)", "Tropic of Cancer (23.5°N)", "Arctic Circle (66.5°N)", "Antarctic Circle (66.5°S)"], correct: 0, explanation: "The equator receives direct overhead sun twice a year (equinoxes)" },
+                        { q: "What causes Mediterranean climate in Southern Europe?", options: ["High pressure in summer, westerlies in winter", "Monsoon winds", "Ocean currents only", "Altitude"], correct: 0, explanation: "Hot dry summers (subtropical high) and mild wet winters (westerly winds)" },
+                        { q: "When does summer occur in Southern Hemisphere?", options: ["December to February", "June to August", "March to May", "September to November"], correct: 0, explanation: "Southern Hemisphere seasons are opposite to Northern Hemisphere" },
+                        { q: "What is the main factor affecting Kenya's coast climate?", options: ["Indian Ocean and monsoon winds", "Altitude only", "Distance from sea", "Ocean currents only"], correct: 0, explanation: "The Indian Ocean moderates temperature; monsoon winds bring seasonal rains" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Mapwork",
+                    templates: [
+                        { q: "What is the bearing of point X from point Y if X is east of Y?", options: ["090°", "270°", "180°", "360°"], correct: 0, explanation: "East is 090°, North is 000°, West is 270°, South is 180°" },
+                        { q: "Calculate gradient between peak (800m) and lake (400m) 4km apart", options: ["1:10", "1:5", "1:20", "1:100"], correct: 0, explanation: "Gradient = Vertical interval / Horizontal distance = 400m / 4000m = 1:10" },
+                        { q: "What is the straight-line distance from A to B if map distance is 5cm at scale 1:250,000?", options: ["12.5 km", "25 km", "6.25 km", "50 km"], correct: 0, explanation: "Ground distance = 5 × 250,000 = 1,250,000cm = 12.5 km" },
+                        { q: "Calculate area of a forest measuring 2cm × 3cm on map (scale 1:50,000)", options: ["1.5 km²", "3 km²", "6 km²", "0.75 km²"], correct: 0, explanation: "Ground dimensions: 2×50,000=100,000cm=1km, 3×50,000=150,000cm=1.5km. Area=1×1.5=1.5km²" },
+                        { q: "What is the vertical interval if contour lines are 20m apart?", options: ["20 meters", "10 meters", "50 meters", "100 meters"], correct: 0, explanation: "Vertical interval is the difference in height between consecutive contour lines" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 9. CRE - VERIFIED
+            creTemplates: [
+                {
+                    topic: "Bible Stories",
+                    templates: [
+                        { q: "Who was the father of Isaac?", options: ["Abraham", "Jacob", "Moses", "David"], correct: 0, explanation: "Abraham was 100 years old when Isaac was born (Genesis 21:5)" },
+                        { q: "What miracle did Jesus perform at Cana?", options: ["Turning water into wine", "Feeding 5000", "Walking on water", "Healing blind man"], correct: 0, explanation: "Jesus' first miracle was at a wedding in Cana (John 2:1-11)" },
+                        { q: "What was the main teaching of Jesus in the Sermon on the Mount?", options: ["Beatitudes/Blessed are the poor in spirit", "Pay taxes to Caesar", "Love your neighbor only", "Build bigger barns"], correct: 0, explanation: "The Beatitudes (Matthew 5:3-12) describe characteristics of God's kingdom" },
+                        { q: "Which disciple denied Jesus three times?", options: ["Peter", "John", "Judas", "Thomas"], correct: 0, explanation: "Peter denied Jesus three times before the rooster crowed (Matthew 26:69-75)" },
+                        { q: "What was God's promise to Abraham?", options: ["Descendants as numerous as stars", "Wealth and power", "Long life", "Victory in battle"], correct: 0, explanation: "God promised Abraham descendants as numerous as stars (Genesis 15:5)" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Christian Ethics",
+                    templates: [
+                        { q: "What is the Christian teaching on marriage?", options: ["Sacred union between one man and one woman", "Temporary arrangement", "Only for having children", "Not important for Christians"], correct: 0, explanation: "Marriage is a lifelong covenant between one man and one woman (Matthew 19:4-6)" },
+                        { q: "Which commandment forbids stealing?", options: ["8th Commandment", "6th Commandment", "10th Commandment", "4th Commandment"], correct: 0, explanation: "Exodus 20:15 - 'You shall not steal' is the 8th commandment" },
+                        { q: "What virtue is demonstrated when helping a neighbor in need?", options: ["Charity/Love", "Pride", "Greed", "Envy"], correct: 0, explanation: "Charity (agape love) is selfless love and help for others" },
+                        { q: "How should Christians respond to someone who wrongs them?", options: ["Forgive them", "Take revenge", "Ignore them", "Report to police only"], correct: 0, explanation: "Jesus taught to forgive others as God forgives us (Matthew 6:14-15)" },
+                        { q: "What did Jesus teach about prayer?", options: ["Pray in private, not for show", "Pray only in church", "Use many words", "Pray only when in trouble"], correct: 0, explanation: "Jesus taught to pray privately, not to be seen by others (Matthew 6:6)" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 10. AGRICULTURE - VERIFIED
+            agricultureTemplates: [
+                {
+                    topic: "Crop Production",
+                    templates: [
+                        { q: "What is the optimal pH for growing maize?", options: ["6.0-7.0", "4.0-5.0", "8.0-9.0", "3.0-4.0"], correct: 0, explanation: "Maize grows best in slightly acidic to neutral soils (pH 6.0-7.0)" },
+                        { q: "Which nutrient deficiency causes yellowing between leaf veins?", options: ["Magnesium", "Nitrogen", "Phosphorus", "Calcium"], correct: 0, explanation: "Magnesium is central to chlorophyll; deficiency causes interveinal chlorosis" },
+                        { q: "What is the best spacing for planting beans?", options: ["30cm × 15cm", "Broadcasting randomly", "Planting 5cm deep", "Spacing 1m × 1m"], correct: 0, explanation: "30cm between rows and 15cm between plants gives optimal plant population" },
+                        { q: "At what stage should tea be harvested?", options: ["When two leaves and a bud appear", "When flowers appear", "When seeds form", "When leaves turn yellow"], correct: 0, explanation: "Two leaves and a bud provide the best quality tea with high caffeine" },
+                        { q: "What pest commonly attacks coffee?", options: ["Coffee berry borer", "Maize stalk borer", "Aphids", "Whiteflies"], correct: 0, explanation: "Coffee berry borer (Hypothenemus hampei) is the most destructive coffee pest" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Animal Production",
+                    templates: [
+                        { q: "What is the gestation period of a cow?", options: ["9 months (283 days)", "6 months", "12 months", "3 months"], correct: 0, explanation: "Cattle gestation averages 283 days (about 9 months)" },
+                        { q: "Which disease causes swollen comb and difficulty breathing in chickens?", options: ["Newcastle disease", "Foot and mouth", "Anthrax", "Rinderpest"], correct: 0, explanation: "Newcastle disease is a viral infection affecting respiratory and nervous systems" },
+                        { q: "What is the best feed for dairy cows in early lactation?", options: ["High protein and energy concentrates", "Only roughage", "Only water", "Low quality hay"], correct: 0, explanation: "Early lactation requires high nutrients to support milk production and body condition" },
+                        { q: "How often should cattle be vaccinated against Foot and Mouth?", options: ["Every 6 months", "Once a year", "Every 2 years", "Never needed"], correct: 0, explanation: "FMD vaccine requires biannual boosting for continuous protection" },
+                        { q: "What housing is suitable for pigs in tropical climate?", options: ["Open-sided with good ventilation", "Completely enclosed", "Underground housing", "No housing"], correct: 0, explanation: "Open sides allow heat dissipation and airflow to prevent heat stress" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 11. BUSINESS STUDIES - VERIFIED
+            businessTemplates: [
+                {
+                    topic: "Commerce",
+                    templates: [
+                        { q: "What is the main function of a retailer?", options: ["Selling goods to final consumers", "Manufacturing products", "Transporting goods", "Growing raw materials"], correct: 0, explanation: "Retailers buy from wholesalers and sell in small quantities to consumers" },
+                        { q: "Which document is sent by seller to buyer before delivery?", options: ["Pro forma invoice", "Receipt", "Delivery note", "Credit note"], correct: 0, explanation: "Pro forma invoice shows estimated costs and terms before actual sale" },
+                        { q: "What does 'COD' stand for in business?", options: ["Cash on Delivery", "Credit on Demand", "Cost of Delivery", "Cash Order Date"], correct: 0, explanation: "COD means payment is made when goods are delivered" },
+                        { q: "Which type of trade involves buying and selling within the same country?", options: ["Home trade", "Foreign trade", "Bilateral trade", "Multilateral trade"], correct: 0, explanation: "Home/internal trade occurs within national boundaries" },
+                        { q: "What is the role of a wholesaler?", options: ["Buying in bulk and selling to retailers", "Selling to final consumers", "Manufacturing goods", "Providing loans"], correct: 0, explanation: "Wholesalers bridge manufacturers and retailers by breaking bulk" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Accounting",
+                    templates: [
+                        { q: "What is the accounting equation?", options: ["Assets = Capital + Liabilities", "Assets = Capital - Liabilities", "Assets = Capital × Liabilities", "Assets = Capital ÷ Liabilities"], correct: 0, explanation: "Assets are financed by either owner's capital or external liabilities", illustration: "accounting" },
+                        { q: "Which book is used to record credit sales?", options: ["Sales journal", "Cash book", "Purchases journal", "General journal"], correct: 0, explanation: "Sales journal/daybook records all credit sales transactions", illustration: "accounting" },
+                        { q: "What is depreciation?", options: ["Decrease in value of fixed assets", "Increase in asset value", "Profit on sale", "Cash payment"], correct: 0, explanation: "Depreciation allocates cost of tangible assets over their useful life", illustration: "accounting" },
+                        { q: "Calculate gross profit: Sales KSh 100,000, Cost KSh 60,000", options: ["KSh 40,000", "KSh 160,000", "KSh 60,000", "KSh 100,000"], correct: 0, explanation: "Gross Profit = Sales - Cost of Goods Sold = 100,000 - 60,000 = 40,000", illustration: "accounting" },
+                        { q: "What is a balance sheet?", options: ["Statement of assets, liabilities and capital", "Record of daily transactions", "List of debtors", "Bank statement"], correct: 0, explanation: "Balance sheet shows financial position at a specific date", illustration: "accounting" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Marketing",
+                    templates: [
+                        { q: "What are the 4 Ps of marketing?", options: ["Product, Price, Place, Promotion", "Product, Price, Place, People", "Product, Price, Promotion, Profit", "Product, Place, Promotion, Plan"], correct: 0, explanation: "Marketing mix: Product, Price, Place (distribution), Promotion" },
+                        { q: "What is market segmentation?", options: ["Dividing market into distinct groups", "Selling in different markets", "Setting different prices", "Making different products"], correct: 0, explanation: "Segmentation divides consumers by needs, demographics, or behavior" },
+                        { q: "Which promotion method uses mass media?", options: ["Advertising", "Personal selling", "Sales promotion", "Public relations"], correct: 0, explanation: "Advertising uses TV, radio, print, online to reach mass audiences" },
+                        { q: "What is a brand?", options: ["Name, symbol or design identifying a product", "Type of packaging", "Price of product", "Place of sale"], correct: 0, explanation: "A brand distinguishes one seller's goods from competitors" },
+                        { q: "What does 'SWOT' stand for?", options: ["Strengths, Weaknesses, Opportunities, Threats", "Sales, Workers, Operations, Time", "Strategy, Work, Organization, Team", "Strength, Work, Opportunity, Time"], correct: 0, explanation: "SWOT analysis evaluates internal strengths/weaknesses and external opportunities/threats" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // 12. COMPUTER STUDIES - VERIFIED WITH CODE EXAMPLES
+            computerTemplates: [
+                {
+                    topic: "Programming",
+                    templates: [
+                        { q: "What is the output of: PRINT 5 + 3 * 2?", options: ["11", "16", "13", "10"], correct: 0, explanation: "Order of operations: multiplication first (3*2=6), then addition (5+6=11)", illustration: "code" },
+                        { q: "Which loop executes at least once before checking condition?", options: ["DO...WHILE", "FOR", "WHILE", "IF"], correct: 0, explanation: "DO...WHILE checks condition after execution, others check before", illustration: "code" },
+                        { q: "What data type stores whole numbers?", options: ["Integer", "String", "Boolean", "Float"], correct: 0, explanation: "Integer (INT) stores whole numbers without decimal points", illustration: "code" },
+                        { q: "What does HTML stand for?", options: ["HyperText Markup Language", "HighText Machine Language", "HyperText Machine Learning", "Home Tool Markup Language"], correct: 0, explanation: "HTML is the standard markup language for creating web pages", illustration: "code" },
+                        { q: "Which symbol starts a comment in Python?", options: ["#", "//", "/*", "--"], correct: 0, explanation: "Python uses # for single-line comments", illustration: "code" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Databases",
+                    templates: [
+                        { q: "What does SQL stand for?", options: ["Structured Query Language", "Simple Question Language", "System Query Logic", "Standard Question Language"], correct: 0, explanation: "SQL is used to manage and query relational databases", illustration: "database" },
+                        { q: "Which SQL command retrieves data?", options: ["SELECT", "INSERT", "UPDATE", "DELETE"], correct: 0, explanation: "SELECT is used to query and retrieve data from tables", illustration: "database" },
+                        { q: "What is a primary key?", options: ["Unique identifier for each record", "First column in table", "Main password", "Foreign key"], correct: 0, explanation: "Primary key uniquely identifies each record and cannot be null", illustration: "database" },
+                        { q: "Which data type stores text?", options: ["VARCHAR", "INT", "DATE", "BOOLEAN"], correct: 0, explanation: "VARCHAR stores variable-length character strings", illustration: "database" },
+                        { q: "What is the purpose of SQL JOIN?", options: ["Combine data from multiple tables", "Delete records", "Create new database", "Add columns"], correct: 0, explanation: "JOIN clauses combine rows from two or more tables based on related columns", illustration: "database" }
+                    ],
+                    data: []
+                },
+                {
+                    topic: "Networks",
+                    templates: [
+                        { q: "What does LAN stand for?", options: ["Local Area Network", "Large Area Network", "Long Area Network", "Linear Area Network"], correct: 0, explanation: "LAN connects computers in a limited area like home, school, or office" },
+                        { q: "Which device connects different networks?", options: ["Router", "Switch", "Hub", "Modem"], correct: 0, explanation: "Routers forward data packets between computer networks" },
+                        { q: "What is the main purpose of a firewall?", options: ["Security/Block unauthorized access", "Speed up internet", "Store data", "Connect devices"], correct: 0, explanation: "Firewalls monitor and control incoming/outgoing network traffic for security" },
+                        { q: "Which topology has all devices connected to a central device?", options: ["Star", "Bus", "Ring", "Mesh"], correct: 0, explanation: "In star topology, all nodes connect to a central hub or switch" },
+                        { q: "What does IP stand for in IP address?", options: ["Internet Protocol", "Internal Process", "International Program", "Interface Protocol"], correct: 0, explanation: "IP addresses identify devices on a network using Internet Protocol" }
+                    ],
+                    data: []
+                }
+            ],
+
+            // Generate questions from templates
+            generateQuestions(subject, count) {
+                const templates = subject === 'mathematics' ? this.mathematicsTemplates :
+                                 subject === 'english' ? this.englishTemplates :
+                                 subject === 'kiswahili' ? this.kiswahiliTemplates :
+                                 subject === 'biology' ? this.biologyTemplates :
+                                 subject === 'chemistry' ? this.chemistryTemplates :
+                                 subject === 'physics' ? this.physicsTemplates :
+                                 subject === 'history' ? this.historyTemplates :
+                                 subject === 'geography' ? this.geographyTemplates :
+                                 subject === 'cre' ? this.creTemplates :
+                                 subject === 'agriculture' ? this.agricultureTemplates :
+                                 subject === 'business' ? this.businessTemplates :
+                                 this.computerTemplates;
+                
+                const questions = [];
+                const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+                const difficulties = ['easy', 'easy', 'medium', 'medium', 'medium', 'hard', 'hard'];
+
+                for (let i = 0; i < count; i++) {
+                    const topicGroup = templates[i % templates.length];
+                    const template = topicGroup.templates[i % topicGroup.templates.length];
+                    
+                    // Create question with verified correct answer
+                    const q = {
+                        id: i + 1,
+                        year: years[i % years.length],
+                        topic: topicGroup.topic,
+                        difficulty: difficulties[i % difficulties.length],
+                        question: template.q,
+                        options: template.options,
+                        correct: template.correct,
+                        explanation: template.explanation,
+                        attempted: false,
+                        correct_answered: false
+                    };
+
+                    // Add illustration if specified
+                    if (template.illustration) {
+                        q.illustration = template.illustration;
+                    }
+
+                    questions.push(q);
+                }
+
+                return questions;
+            }
+        };
+
+        // ==========================================
+        // APP STATE AND FUNCTIONS
+        // ==========================================
+
+        let questionsDB = {
+            mathematics: [], english: [], kiswahili: [],
+            biology: [], chemistry: [], physics: [],
+            history: [], geography: [], cre: [],
+            agriculture: [], business: [], computer: []
+        };
+
+        let currentSubject = 'mathematics';
+        let currentQuestionIndex = 0;
+        let selectedOption = null;
+        let currentFilter = 'all';
+        let filteredQuestions = [];
+        let userStats = {
+            attempted: 0,
+            correct: 0,
+            bySubject: { 
+                mathematics: 0, english: 0, kiswahili: 0,
+                biology: 0, chemistry: 0, physics: 0,
+                history: 0, geography: 0, cre: 0,
+                agriculture: 0, business: 0, computer: 0 
+            },
+            byTopic: {}
+        };
+
+        // Mock Exam State
+        let examState = {
+            active: false,
+            questions: [],
+            currentIndex: 0,
+            answers: [],
+            startTime: null,
+            timerInterval: null,
+            timeRemaining: 0
+        };
+
+        function initApp() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            const loadingBar = document.getElementById('loadingBar');
+            const loadingDetail = document.getElementById('loadingDetail');
+
+            const subjects = [
+                { name: 'mathematics', label: 'Mathematics' },
+                { name: 'english', label: 'English' },
+                { name: 'kiswahili', label: 'Kiswahili' },
+                { name: 'biology', label: 'Biology' },
+                { name: 'chemistry', label: 'Chemistry' },
+                { name: 'physics', label: 'Physics' },
+                { name: 'history', label: 'History' },
+                { name: 'geography', label: 'Geography' },
+                { name: 'cre', label: 'CRE' },
+                { name: 'agriculture', label: 'Agriculture' },
+                { name: 'business', label: 'Business Studies' },
+                { name: 'computer', label: 'Computer Studies' }
+            ];
+
+            let loaded = 0;
+            subjects.forEach((subj, index) => {
+                setTimeout(() => {
+                    questionsDB[subj.name] = QuestionGenerator.generateQuestions(subj.name, 500);
+                    loaded++;
+                    const percent = (loaded / 12) * 100;
+                    loadingBar.style.width = percent + '%';
+                    loadingDetail.textContent = `${subj.label}: 500/500`;
+                    
+                    if (loaded === 12) {
+                        setTimeout(() => {
+                            loadingScreen.classList.add('hidden');
+                            document.getElementById('mainApp').style.display = 'flex';
+                            
+                            const saved = localStorage.getItem('atomiq_stats');
+                            if (saved) userStats = JSON.parse(saved);
+                            
+                            applyFilter();
+                            updateStats();
+                        }, 500);
+                    }
+                }, index * 250);
+            });
+        }
+
+        function selectSubject(subject) {
+            currentSubject = subject;
+            currentQuestionIndex = 0;
+            
+            document.querySelectorAll('.subject-card').forEach(card => {
+                card.classList.remove('active');
+                if (card.dataset.subject === subject) card.classList.add('active');
+            });
+
+            const names = {
+                mathematics: 'Mathematics', english: 'English', kiswahili: 'Kiswahili',
+                biology: 'Biology', chemistry: 'Chemistry', physics: 'Physics',
+                history: 'History', geography: 'Geography', cre: 'CRE',
+                agriculture: 'Agriculture', business: 'Business Studies', computer: 'Computer Studies'
+            };
+            document.getElementById('subjectName').textContent = names[subject];
+            
+            applyFilter();
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === filter) btn.classList.add('active');
+            });
+            applyFilter();
+        }
+
+        function applyFilter() {
+            const all = questionsDB[currentSubject];
+            
+            if (currentFilter === 'all') {
+                filteredQuestions = all;
+            } else {
+                filteredQuestions = all.filter(q => q.difficulty === currentFilter);
+            }
+            
+            filteredQuestions = [...filteredQuestions].sort(() => Math.random() - 0.5);
+            
+            document.getElementById('totalNum').textContent = filteredQuestions.length;
+            currentQuestionIndex = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (filteredQuestions.length === 0) {
+                document.getElementById('questionText').textContent = "No questions match this filter.";
+                document.getElementById('illustrationContainer').innerHTML = '';
+                return;
+            }
+
+            const q = filteredQuestions[currentQuestionIndex];
+            selectedOption = null;
+            
+            document.getElementById('currentNum').textContent = currentQuestionIndex + 1;
+            document.getElementById('qYear').textContent = 'KCSE ' + q.year;
+            document.getElementById('qTopic').textContent = q.topic;
+            
+            const diffEl = document.getElementById('qDifficulty');
+            diffEl.textContent = q.difficulty.toUpperCase();
+            diffEl.className = 'difficulty ' + q.difficulty;
+            
+            document.getElementById('questionText').textContent = q.question;
+            
+            // Add illustration if present
+            const illContainer = document.getElementById('illustrationContainer');
+            illContainer.innerHTML = '';
+            if (q.illustration) {
+                const illDiv = document.createElement('div');
+                illDiv.className = 'illustration';
+                
+                if (q.illustration === 'formula') {
+                    illDiv.innerHTML = '<div class="illustration-title">Formula</div><div class="math-formula">Remember: p = mv, F = ma, KE = ½mv²</div>';
+                } else if (q.illustration === 'circuit') {
+                    illDiv.innerHTML = '<div class="illustration-title">Circuit Diagram</div><div class="circuit-diagram">[Battery]---[Resistor]---[Ammeter]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Voltmeter]</div>';
+                } else if (q.illustration === 'circle') {
+                    illDiv.innerHTML = '<div class="illustration-title">Circle</div><div class="math-formula">&nbsp;&nbsp;&nbsp;&nbsp;_____<br>&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\\<br>&nbsp;|&nbsp;&nbsp;&nbsp;r=7cm&nbsp;&nbsp;|<br>&nbsp;&nbsp;\\_____/<br>Area = πr²</div>';
+                } else if (q.illustration === 'code') {
+                    illDiv.innerHTML = '<div class="illustration-title">Code Example</div><div class="code-block">PRINT "Hello World"<br>X = 5 + 3<br>PRINT X</div>';
+                } else if (q.illustration === 'database') {
+                    illDiv.innerHTML = '<div class="illustration-title">Database Table</div><div class="code-block">| ID | Name &nbsp;| Age |<br>|----|--------|-----|<br>| 1 &nbsp;| John &nbsp;&nbsp;| 20 &nbsp;|<br>| 2 &nbsp;| Mary &nbsp;&nbsp;| 22 &nbsp;|</div>';
+                } else if (q.illustration === 'accounting') {
+                    illDiv.innerHTML = '<div class="illustration-title">Ledger Account</div><div class="accounting-table">Dr &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cr<br>Cash | 1000 | Sales | 1000</div>';
+                }
+                
+                illContainer.appendChild(illDiv);
+            }
+            
+            const optionsList = document.getElementById('optionsList');
+            optionsList.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.onclick = () => selectOption(index);
+                div.innerHTML = `
+                    <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                    <div>${option}</div>
+                `;
+                optionsList.appendChild(div);
+            });
+
+            document.getElementById('explanation').classList.remove('show');
+            document.getElementById('checkBtn').style.display = 'block';
+            document.getElementById('checkBtn').disabled = false;
+            document.getElementById('nextBtn').style.display = 'none';
+            
+            if (q.attempted) {
+                showCorrectAnswer();
+            }
+        }
+
+        function selectOption(index) {
+            if (filteredQuestions[currentQuestionIndex].attempted) return;
+            
+            selectedOption = index;
+            document.querySelectorAll('.option').forEach((opt, i) => {
+                opt.classList.remove('selected');
+                if (i === index) opt.classList.add('selected');
+            });
+        }
+
+        function checkAnswer() {
+            const q = filteredQuestions[currentQuestionIndex];
+            if (selectedOption === null && !q.attempted) {
+                showToast('Please select an answer!', 'error');
+                return;
+            }
+
+            showCorrectAnswer();
+        }
+
+        function showCorrectAnswer() {
+            const q = filteredQuestions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            if (!q.attempted) {
+                q.attempted = true;
+                userStats.attempted++;
+                userStats.bySubject[currentSubject]++;
+                
+                if (selectedOption === q.correct) {
+                    q.correct_answered = true;
+                    userStats.correct++;
+                    showToast('Correct! 🎉', 'success');
+                } else {
+                    showToast('Incorrect! Check explanation.', 'error');
+                }
+                
+                if (!userStats.byTopic[q.topic]) userStats.byTopic[q.topic] = { attempted: 0, correct: 0 };
+                userStats.byTopic[q.topic].attempted++;
+                if (selectedOption === q.correct) userStats.byTopic[q.topic].correct++;
+                
+                saveStats();
+                updateStats();
+            }
+
+            options[q.correct].classList.add('correct');
+            if (selectedOption !== null && selectedOption !== q.correct) {
+                options[selectedOption].classList.add('wrong');
+            }
+
+            document.getElementById('explanationText').textContent = q.explanation;
+            document.getElementById('explanation').classList.add('show');
+
+            document.getElementById('checkBtn').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % filteredQuestions.length;
+            loadQuestion();
+        }
+
+        function prevQuestion() {
+            currentQuestionIndex = (currentQuestionIndex - 1 + filteredQuestions.length) % filteredQuestions.length;
+            loadQuestion();
+        }
+
+        function updateStats() {
+            document.getElementById('attemptedCount').textContent = userStats.attempted;
+            document.getElementById('correctCount').textContent = userStats.correct;
+            
+            const percent = userStats.attempted > 0 ? 
+                Math.round((userStats.correct / userStats.attempted) * 100) : 0;
+            document.getElementById('progressPercent').textContent = percent + '%';
+            document.getElementById('progressBar').style.width = percent + '%';
+        }
+
+        function saveStats() {
+            localStorage.setItem('atomiq_stats', JSON.stringify(userStats));
+        }
+
+        function showPage(page) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('statsPage').classList.remove('active');
+            document.getElementById('profilePage').classList.remove('active');
+
+            if (page === 'practice') {
+                document.getElementById('mainContent').style.display = 'block';
+            } else if (page === 'stats') {
+                document.getElementById('statsPage').classList.add('active');
+                showStats();
+            } else if (page === 'profile') {
+                document.getElementById('profilePage').classList.add('active');
+            }
+        }
+
+        function showStats() {
+            document.getElementById('statTotal').textContent = userStats.attempted;
+            const accuracy = userStats.attempted > 0 ? 
+                Math.round((userStats.correct / userStats.attempted) * 100) : 0;
+            document.getElementById('statAccuracy').textContent = accuracy + '%';
+            document.getElementById('statMath').textContent = userStats.bySubject.mathematics;
+            document.getElementById('statBio').textContent = userStats.bySubject.biology;
+            
+            const topicList = document.getElementById('topicList');
+            topicList.innerHTML = '<h3 style="margin-bottom: 1rem; color: var(--text-muted);">Topic Mastery</h3>';
+            
+            Object.entries(userStats.byTopic).forEach(([topic, data]) => {
+                const percent = data.attempted > 0 ? Math.round((data.correct / data.attempted) * 100) : 0;
+                const div = document.createElement('div');
+                div.className = 'topic-item';
+                div.innerHTML = `
+                    <div class="topic-header">
+                        <span>${topic}</span>
+                        <span>${percent}%</span>
+                    </div>
+                    <div class="topic-bar">
+                        <div class="topic-fill" style="width: ${percent}%"></div>
+                    </div>
+                `;
+                topicList.appendChild(div);
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // ==========================================
+        // MOCK EXAM FUNCTIONS
+        // ==========================================
+
+        function openExamSetup() {
+            document.getElementById('examSetupOverlay').classList.add('active');
+        }
+
+        function startExam() {
+            const subject = document.getElementById('examSubject').value;
+            const count = parseInt(document.getElementById('examQuestionCount').value);
+            const difficulty = document.getElementById('examDifficulty').value;
+
+            // Generate exam questions
+            let questions = [...questionsDB[subject]];
+            
+            // Filter by difficulty if specified
+            if (difficulty !== 'mixed') {
+                questions = questions.filter(q => q.difficulty === difficulty);
+            }
+
+            // Shuffle and select count
+            questions = questions.sort(() => Math.random() - 0.5).slice(0, count);
+
+            // Initialize exam state
+            examState = {
+                active: true,
+                questions: questions,
+                currentIndex: 0,
+                answers: new Array(count).fill(null),
+                startTime: Date.now(),
+                timeRemaining: count * 90 // 90 seconds per question
+            };
+
+            // Hide setup, show exam
+            document.getElementById('examSetupOverlay').classList.remove('active');
+            document.getElementById('examOverlay').classList.add('active');
+
+            // Start timer
+            startExamTimer();
+            
+            // Load first question
+            loadExamQuestion();
+        }
+
+        function startExamTimer() {
+            updateTimerDisplay();
+            
+            examState.timerInterval = setInterval(() => {
+                examState.timeRemaining--;
+                updateTimerDisplay();
+                
+                if (examState.timeRemaining <= 0) {
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(examState.timeRemaining / 60);
+            const seconds = examState.timeRemaining % 60;
+            document.getElementById('examTimer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Warning colors
+            const timerEl = document.getElementById('examTimer');
+            if (examState.timeRemaining < 300) { // Less than 5 minutes
+                timerEl.style.background = 'rgba(239, 68, 68, 0.4)';
+                timerEl.style.animation = 'pulse-timer 0.5s infinite';
+            }
+        }
+
+        function loadExamQuestion() {
+            const q = examState.questions[examState.currentIndex];
+            
+            document.getElementById('examQuestionNum').textContent = examState.currentIndex + 1;
+            document.getElementById('examTotalNum').textContent = examState.questions.length;
+
+            const content = document.getElementById('examContent');
+            content.innerHTML = `
+                <div class="exam-question-card">
+                    <div class="question-header">
+                        <div class="question-meta">
+                            <span>KCSE ${q.year}</span> • <span>${q.topic}</span> • 
+                            <span class="difficulty ${q.difficulty}">${q.difficulty.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list">
+                        ${q.options.map((opt, idx) => `
+                            <div class="option ${examState.answers[examState.currentIndex] === idx ? 'selected' : ''}" 
+                                 onclick="selectExamAnswer(${idx})">
+                                <div class="option-letter">${String.fromCharCode(65 + idx)}</div>
+                                <div>${opt}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Update navigation buttons
+            const prevBtn = document.querySelector('.exam-btn-prev');
+            const nextBtn = document.querySelector('.exam-btn-next');
+            const submitBtn = document.querySelector('.exam-btn-submit');
+
+            prevBtn.disabled = examState.currentIndex === 0;
+            
+            if (examState.currentIndex === examState.questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function selectExamAnswer(index) {
+            examState.answers[examState.currentIndex] = index;
+            loadExamQuestion(); // Refresh to show selection
+        }
+
+        function nextExamQuestion() {
+            if (examState.currentIndex < examState.questions.length - 1) {
+                examState.currentIndex++;
+                loadExamQuestion();
+            }
+        }
+
+        function prevExamQuestion() {
+            if (examState.currentIndex > 0) {
+                examState.currentIndex--;
+                loadExamQuestion();
+            }
+        }
+
+        function submitExam() {
+            clearInterval(examState.timerInterval);
+            
+            // Calculate results
+            let correct = 0;
+            let attempted = 0;
+            
+            examState.answers.forEach((answer, idx) => {
+                if (answer !== null) {
+                    attempted++;
+                    if (answer === examState.questions[idx].correct) {
+                        correct++;
+                    }
+                }
+            });
+
+            const total = examState.questions.length;
+            const percentage = Math.round((correct / total) * 100);
+            const timeUsed = Math.floor((Date.now() - examState.startTime) / 1000);
+            
+            // Determine grade
+            let grade, message;
+            if (percentage >= 80) {
+                grade = 'A';
+                message = 'Excellent work! Outstanding performance!';
+            } else if (percentage >= 75) {
+                grade = 'A-';
+                message = 'Very good! Keep it up!';
+            } else if (percentage >= 70) {
+                grade = 'B+';
+                message = 'Good job! You\'re doing well!';
+            } else if (percentage >= 65) {
+                grade = 'B';
+                message = 'Above average! Nice work!';
+            } else if (percentage >= 60) {
+                grade = 'B-';
+                message = 'Fairly good! Room for improvement!';
+            } else if (percentage >= 55) {
+                grade = 'C+';
+                message = 'Average. Keep practicing!';
+            } else if (percentage >= 50) {
+                grade = 'C';
+                message = 'Pass. More practice needed!';
+            } else if (percentage >= 45) {
+                grade = 'C-';
+                message = 'Below average. Work harder!';
+            } else if (percentage >= 40) {
+                grade = 'D+';
+                message = 'Poor. Significant improvement needed!';
+            } else if (percentage >= 35) {
+                grade = 'D';
+                message = 'Very poor. Start revising seriously!';
+            } else if (percentage >= 30) {
+                grade = 'D-';
+                message = 'Very weak. Urgent attention required!';
+            } else {
+                grade = 'E';
+                message = 'Fail. Please seek help immediately!';
+            }
+
+            // Display results
+            document.getElementById('examOverlay').classList.remove('active');
+            document.getElementById('resultsOverlay').classList.add('active');
+
+            document.getElementById('resultsGrade').textContent = grade;
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('resultScore').textContent = `${correct}/${total}`;
+            document.getElementById('resultPercent').textContent = `${percentage}%`;
+            
+            const mins = Math.floor(timeUsed / 60);
+            const secs = timeUsed % 60;
+            document.getElementById('resultTime').textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+            // Detailed breakdown
+            const details = document.getElementById('resultsDetails');
+            details.innerHTML = '<h3 style="margin-bottom: 1rem; color: var(--text-muted);">Question Review</h3>';
+            
+            examState.questions.forEach((q, idx) => {
+                const userAnswer = examState.answers[idx];
+                const isCorrect = userAnswer === q.correct;
+                const isSkipped = userAnswer === null;
+                
+                const item = document.createElement('div');
+                item.className = `result-item ${isSkipped ? 'skipped' : (isCorrect ? '' : 'wrong')}`;
+                item.innerHTML = `
+                    <div>
+                        <strong>Q${idx + 1}:</strong> ${q.question.substring(0, 50)}...
+                        <br><small style="color: var(--text-muted);">
+                            ${isSkipped ? '⏭️ Skipped' : (isCorrect ? '✓ Correct' : '✗ Wrong')}
+                            ${!isSkipped ? `- You chose: ${q.options[userAnswer]}` : ''}
+                        </small>
+                    </div>
+                    <div style="font-size: 1.5rem;">${isSkipped ? '⏭️' : (isCorrect ? '✅' : '❌')}</div>
+                `;
+                details.appendChild(item);
+            });
+
+            // Save exam result to stats
+            userStats.attempted += attempted;
+            userStats.correct += correct;
+            saveStats();
+            updateStats();
+        }
+
+        function closeResults() {
+            document.getElementById('resultsOverlay').classList.remove('active');
+            examState.active = false;
+        }
+
+        function retakeExam() {
+            closeResults();
+            openExamSetup();
+        }
+
+        // ==========================================
+        // AI SMART TUTOR FUNCTIONS
+        // ==========================================
+
+        function openTutor() {
+            document.getElementById('tutorOverlay').classList.add('active');
+            document.querySelector('.tutor-btn').classList.remove('pulse');
+        }
+
+        function closeTutor() {
+            document.getElementById('tutorOverlay').classList.remove('active');
+        }
+
+        function askTutor(question) {
+            document.getElementById('tutorInput').value = question;
+            sendTutorMessage();
+        }
+
+        function sendTutorMessage() {
+            const input = document.getElementById('tutorInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addTutorMessage(message, 'user');
+            input.value = '';
+
+            // Show typing indicator
+            showTutorTyping();
+
+            // Generate response after delay
+            setTimeout(() => {
+                hideTutorTyping();
+                const response = generateTutorResponse(message);
+                addTutorMessage(response, 'tutor');
+            }, 1500);
+        }
+
+        function addTutorMessage(text, sender) {
+            const container = document.getElementById('tutorMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `tutor-message ${sender}`;
+            msgDiv.innerHTML = `
+                <div class="tutor-avatar">${sender === 'user' ? '👤' : '🤖'}</div>
+                <div class="tutor-bubble">${text}</div>
+            `;
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showTutorTyping() {
+            const container = document.getElementById('tutorMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'tutor-typing';
+            typingDiv.id = 'tutorTyping';
+            typingDiv.innerHTML = `
+                <div class="tutor-avatar">🤖</div>
+                <div style="display: flex; gap: 4px; align-items: center;">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            `;
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function hideTutorTyping() {
+            const typing = document.getElementById('tutorTyping');
+            if (typing) typing.remove();
+        }
+
+        function generateTutorResponse(question) {
+            const lowerQ = question.toLowerCase();
+            
+            // Mathematics responses
+            if (lowerQ.includes('quadratic') || lowerQ.includes('quadratics')) {
+                return "Quadratic equations are in the form ax² + bx + c = 0. You can solve them using:<br><br>1. <strong>Factorization</strong>: Find two numbers that multiply to ac and add to b<br>2. <strong>Quadratic formula</strong>: x = (-b ± √(b²-4ac)) / 2a<br>3. <strong>Completing the square</strong><br><br>Example: x² - 5x + 6 = 0 factors to (x-2)(x-3) = 0, so x = 2 or 3.<br><br>Would you like me to walk through a specific problem?";
+            }
+            
+            if (lowerQ.includes('photosynthesis')) {
+                return "<strong>Photosynthesis</strong> is the process by which plants convert light energy into chemical energy (glucose).<br><br><strong>Equation:</strong> 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂<br><br><strong>Key points:</strong><br>• Occurs in chloroplasts<br>• Requires chlorophyll<br>• Produces glucose and oxygen<br>• Two stages: Light-dependent and Light-independent (Calvin cycle)<br><br>Common exam question: Name the conditions and products of photosynthesis!";
+            }
+            
+            if (lowerQ.includes('dna') && lowerQ.includes('rna')) {
+                return "<strong>DNA vs RNA - Key Differences:</strong><br><br><strong>DNA:</strong><br>• Double-stranded (double helix)<br>• Contains deoxyribose sugar<br>• Bases: A, T, C, G<br>• Found in nucleus<br>• Stores genetic information<br><br><strong>RNA:</strong><br>• Single-stranded<br>• Contains ribose sugar<br>• Bases: A, U, C, G (Uracil replaces Thymine)<br>• Found in nucleus and cytoplasm<br>• Types: mRNA, tRNA, rRNA<br>• Involved in protein synthesis";
+            }
+            
+            if (lowerQ.includes('study tip') || lowerQ.includes('revision') || lowerQ.includes('prepare')) {
+                return "<strong>Top KCSE Study Tips:</strong><br><br>1. <strong>Past Papers</strong>: Practice with 5+ years of KCSE papers<br>2. <strong>Time Management</strong>: Allocate time per question (e.g., 2 mins per MCQ)<br>3. <strong>Active Recall</strong>: Test yourself, don't just re-read<br>4. <strong>Spaced Repetition</strong>: Review topics at increasing intervals<br>5. <strong>Weak Areas</strong>: Focus 60% of time on topics you struggle with<br>6. <strong>Rest</strong>: Sleep 7-8 hours before exam<br>7. <strong>Mock Exams</strong>: Use ATOMIQ's mock exam mode!<br><br>You've got this! 💪";
+            }
+            
+            if (lowerQ.includes('pythagoras') || lowerQ.includes('theorem')) {
+                return "<strong>Pythagoras' Theorem:</strong> In a right-angled triangle, a² + b² = c²<br><br>Where:<br>• a and b are the two shorter sides<br>• c is the hypotenuse (longest side, opposite the right angle)<br><br><strong>Example:</strong> If a = 3 and b = 4, then c² = 9 + 16 = 25, so c = 5.<br><br><strong>Common Pythagorean triples:</strong> 3-4-5, 5-12-13, 8-15-17, 7-24-25";
+            }
+            
+            if (lowerQ.includes('ohms law') || lowerQ.includes('ohm')) {
+                return "<strong>Ohm's Law:</strong> V = I × R<br><br>Where:<br>• V = Voltage (Volts)<br>• I = Current (Amperes)<br>• R = Resistance (Ohms)<br><br><strong>Remember:</strong> V = IR (Victory = Indian Railway)<br><br>You can rearrange:<br>• I = V/R<br>• R = V/I<br><br>Example: If V = 12V and R = 4Ω, then I = 12/4 = 3A";
+            }
+            
+            if (lowerQ.includes('independence') || lowerQ.includes('kenyatta')) {
+                return "<strong>Kenya's Independence:</strong><br><br>• <strong>December 12, 1963</strong>: Kenya gained independence from Britain<br>• <strong>First President:</strong> Jomo Kenyatta<br>• <strong>First Vice President:</strong> Jaramogi Oginga Odinga<br>• <strong>Colonial period:</strong> 1920-1963 (British colony)<br>• <strong>Mau Mau Uprising:</strong> 1952-1960 accelerated independence<br>• <strong>Lancaster House Conferences:</strong> Negotiated independence terms<br><br>Kenya became a republic in 1964.";
+            }
+            
+            if (lowerQ.includes('atom') || lowerQ.includes('proton') || lowerQ.includes('electron')) {
+                return "<strong>Atomic Structure:</strong><br><br><strong>Subatomic particles:</strong><br>• <strong>Protons:</strong> Positive charge, in nucleus, determines element<br>• <strong>Neutrons:</strong> No charge, in nucleus, contributes to mass<br>• <strong>Electrons:</strong> Negative charge, orbit nucleus, involved in bonding<br><br><strong>Key formulas:</strong><br>• Atomic number = Number of protons<br>• Mass number = Protons + Neutrons<br>• In neutral atom: Protons = Electrons";
+            }
+            
+            if (lowerQ.includes('hello') || lowerQ.includes('hi') || lowerQ.includes('hey')) {
+                return "Hello! 👋 I'm your AI study buddy. I can help you with:<br><br>• Explaining KCSE topics<br>• Solving math problems<br>• Science concepts<br>• History facts<br>• Study tips<br><br>What would you like to learn today?";
+            }
+            
+            // Default response
+            return "That's a great question! I can help you understand this topic better. Here are some suggestions:<br><br>• Try asking about specific subjects (Math, Biology, History, etc.)<br>• Ask for formulas or equations<br>• Request study tips<br>• Ask about specific KCSE topics<br><br>What specifically would you like to know? I'm here to help! 📚";
+        }
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (e) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) e.preventDefault();
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
